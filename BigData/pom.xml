@@ -10,6 +10,9 @@
     <modules>
         <module>DataLoader</module>
         <module>StatisticsRecommender</module>
+        <module>KafkaStreaming</module>
+        <module>StreamingRecommender</module>
+        <module>BusinessServer</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -20,6 +23,7 @@
         <spark.version>3.1.1</spark.version>
         <hutool.version>5.6.3</hutool.version>
         <mongo-java-driver.version>3.12.8</mongo-java-driver.version>
+        <kafka.version>2.8.0</kafka.version>
     </properties>
     <dependencies>
         <!-- 引入共同的日志管理工具 -->
