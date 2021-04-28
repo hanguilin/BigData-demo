@@ -53,13 +53,11 @@
             <artifactId>kafka-clients</artifactId>
             <version>${kafka.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-streaming-kafka -->
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-streaming-kafka_2.11</artifactId>
-            <version>1.6.3</version>
+            <artifactId>spark-streaming-kafka-0-10_2.12</artifactId>
+            <version>${spark.version}</version>
         </dependency>
-
 
     </dependencies>
 

@@ -1,9 +1,10 @@
 package cn.javayuli.businessserver.web;
 
+import cn.javayuli.businessserver.vo.UserRateVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -21,14 +22,12 @@ public class RatingController {
     /**
      * 用户对商品进行评分
      *
-     * @param user 用户
-     * @param product 商品
-     * @param score 分数
+     * @param userRateVo 用户评分
      * @return
      */
-    @GetMapping("/rate")
-    public String doRate(@RequestParam String user, @RequestParam String product, @RequestParam Double score) {
-        LOGGER.info(PRODUCT_RATING_PREFIX + ":" + user +"|"+ product +"|"+ score +"|"+ System.currentTimeMillis()/1000);
+    @PostMapping("/rate")
+    public String doRate(@RequestBody UserRateVo userRateVo) {
+        LOGGER.info(PRODUCT_RATING_PREFIX + ":" + userRateVo.getUser() +"|"+ userRateVo.getProduct() +"|"+ userRateVo.getScore() +"|"+ System.currentTimeMillis()/1000);
         return "SUCCESS";
     }
 }

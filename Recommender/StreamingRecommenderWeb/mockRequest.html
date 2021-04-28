@@ -1,0 +1,83 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模拟发送请求</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+</head>
+
+<body>
+
+    <div class="all">
+        <button id="submit">下发数据</button>
+        <div class="data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>商品名称</th>
+                        <th>下发评分</th>
+                        <th>下发人</th>
+                        <th>下发时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let productArr = ['新款陈数明星同款醋酸缎面桔色西装春夏百搭显瘦西服OL套装女','OVV春夏提花面料V领长袖连衣裙GQLCJ11003A','春季新款七分袖职业收腰黑色小西装西服夏季薄款白色西装外套女','风衣女士中长款2021年春秋新款洋气垂感薄款气质高端大气外套过膝','高端气质风衣外套女初春秋季2021年新款小个子短款贵夫人洋气薄款','YIMU粉色西装外套女春装毛呢双排扣人字纹炸街垫肩名媛修身上衣','自制 无敌好面料 春秋 西服白色西装外套又飒又帅出街即C位 垫肩','ONLY夏季新款简约通勤版型单排纽扣衣襟西服女','ONLY夏季新款时尚短款泡泡袖V领系带收腰衬衫女','2021新款春装职业白色西装女套装ol时尚气质小香风休闲外套工作服','2021新款清新绿色醋酸西装气质垂感阔腿裤两件套OL套装女高端洋气','高阶定制jin口重磅全真丝！女一粒扣含腰带垫肩长袖西装外套83961','《初壹》春夏新款森系盘扣女装 日常中式改良双层无袖连衣裙 女','Z老板 层次艺术感 羊毛两件套围裙西装 中长款西装领可拆卸马甲女','2018春秋新款V领修身丝绒西装女 双排扣复古极简中长款工装外套','MONA新款2021年今年爆款卫衣女设计感小众小个子春秋季薄款潮ins','chic西装外套女春季2021新款韩版一粒扣休闲网红修身小西服上衣潮','【店长推荐】Buou Buou新款夏外搭上衣防晒衣女夏季短外套DF2C002','西装短外套女士小个子早春季西服设计感小众上衣2021新款秋薄潮夏','FAYEYE SHOP自制 高品质！好版型！洋气韩版宽松休闲小西装外套女','Uslonsrd粉色西装女装薄款外套职业装2021春夏九分袖半衬亚麻上衣','小熊2021夏新款JK制服马甲日系学院风西装背心外套女TTVW216501N','PRICH2021年春季新款宽松休闲上衣日系慵懒针织开衫女PRKCB5103Q','娅丽达黑色小西装外套女2021春夏薄款上衣短款小个子白色休闲西服','秋季新款黑色职业套装气质西装商务正装面试装工作服职业装OL工装','中老年女装加大码全棉长袖格子衬衫胖妈妈装春秋薄款衬衣宽松上衣','秘密盒子可诉可可挚爱 收藏级品质高定30姆米重磅真丝西装外套女','13良品小个子 颜色细节都很用心西服150版型奶黄色斜扣西装外套女','PRICH2021年春季新款气质系带英伦风设计感风衣外套女PRJTB5102R','2021韩版宽松休闲网红小西装外套女新款春秋一粒扣西服上衣英伦风','浅秋金菊假两件套2021新款女装潮春款爆款毛衣女士上衣针织打底衫','丝绒西装外套女春秋2021上衣气质高端职业装休闲金丝绒小西服套装','【雅叙】qtu亚麻女装短西装修身春秋装新款西服长袖小外套女W1142','OFFIY治愈系SUN轻熟职业通勤双排扣西服外套时尚春款西装套装气质','陈小颖Jupiter春秋显瘦名媛OL百搭西装外套女新款设计感小众上衣','阔版小西服女2021春秋新款设计感小众外套姜黄色韩版宽松休闲西装','西装外套女2021早春新款奶白色减龄炸街高级范设计感别致西服上衣','品牌折扣店商场专柜撤柜外贸女装尾货短袖上衣设计感小众V领T恤夏','觅格经典双排扣收腰蓝色职业装套装女高级感西装外套气质女神范03','Uslonsrd亚麻西装女装薄款外套休闲职业装2021春装九分袖米色上衣','复古港味雪纺花衬衫女春款2021新款宽松设计感小众洋气长袖上衣潮','Vero Moda2021春夏新款韩版格纹通勤单扣西装外套女','Oece气质小西装2021年春装新款女装复古英伦炸街韩版休闲西服外套','粉色小西装女外套2021春秋季新款休闲韩版网红短款小个子女士西服','2021春秋季新款浅灰色西服上衣宽松休闲网格子小西装外套女韩版潮','西装+百褶短裙是正解！浅荞麦绿特殊复合丝手工捏褶女套装83929','chic小个子粉色西装外套女薄款春秋2021新款高级感西服设计感小众','西装外套女薄款设计感小众春秋2021新款复古炸街烫钻黑色西服上衣','网红西装套装女英伦风 韩版小香风春秋炸街休闲气质时尚职业西服','BBBLUE小众自制早春灰白拼色泡泡袖小西装高级感设计时髦短外套女','2021春装新款女外套提花西装短款长袖小西服韩版修身上衣一粒扣潮','CAN2021春夏新款 法式荷叶边V领衬衫设计感小众宽松显瘦短款上衣','王小鸭2021春季新款修身显瘦洋气一粒扣OL气质优雅长袖西装外套女','小西装质感女士上衣高级感炸街重磅醋酸缎面早春西装外套女春夏','西装套装女韩版职业装套裤修身面试商务正装小西服工作服红色春秋','秘密盒子[现货]雅致新色 21春夏新款法式简约黄色混搭风西装女','衣然故我小西装外套女2021新款通勤气质宽松一粒扣浅卡其色上衣','觅格双排扣精纺羊毛收腰职业套装女高级感西装外套气质女神范V65','ROCOCO2021春夏新款百搭甜美V领时髦碎花减龄显瘦全棉小衫上衣女','原创黑色奶咖色棕色复古宽松廓形落肩炸街西服英伦风西装外套女秋']
+        let run = true
+        let timer
+        $(function () {
+            $('#submit').click(function () {
+                if (run) {
+                    $(this).html('停止下发')
+                    timer = setInterval(() => {
+                        let score = randomNum(1, 10)
+                        let product = getRandomProduct()
+                        let user = 'han'
+                        $.ajax({
+                            url: 'http://192.168.1.43:7001/rate',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({score, user, product}),
+                            success: () => {
+                                $('.data-table tbody').prepend(`<tr><td>${product}</td><td>${score}</td><td>${user}</td><td>${moment().format('YYYY/MM/DD HH:mm:ss')}</td></tr>`)
+                            }
+                        })
+                    }, 500)
+                    run = false
+                } else {
+                    $(this).html('下发数据')
+                    clearInterval(timer)
+                    run = true
+                }
+            })
+        })
+        //生成从minNum到maxNum的随机数
+        function randomNum(minNum, maxNum) {
+            switch (arguments.length) {
+                case 1:
+                    return parseInt(Math.random() * minNum + 1, 10)
+                case 2:
+                    return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10)
+                default:
+                    return 0
+            }
+        }
+
+        function getRandomProduct () {
+            let random = parseInt(Math.random() * productArr.length)
+            return productArr[random]
+        }
+
+    </script>
+</body>
+
+</html>
