@@ -1,6 +1,9 @@
 package cn.javayuli.common.mock;
 
+import cn.javayuli.common.constants.NameConstant;
+import cn.javayuli.common.dao.HBaseDao;
 import cn.javayuli.common.utils.JDBCUtil;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import java.sql.Connection;

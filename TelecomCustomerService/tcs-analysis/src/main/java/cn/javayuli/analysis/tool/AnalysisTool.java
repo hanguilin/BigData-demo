@@ -1,6 +1,5 @@
 package cn.javayuli.analysis.tool;
 
-import cn.hutool.setting.dialect.Props;
 import cn.javayuli.analysis.format.MysqlOutputFormat;
 import cn.javayuli.analysis.kv.AnalysisKey;
 import cn.javayuli.analysis.kv.AnalysisValue;

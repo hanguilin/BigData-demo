@@ -29,8 +29,9 @@ public class HBaseConsumer {
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(kafkaProps);
         kafkaConsumer.subscribe(Collections.singletonList(kafkaProps.getStr("kafka.topic")));
         HBaseDao hBaseDao = new HBaseDao();
+        // 创建表
         String tableName = HBaseUtil.getHBaseProperties("tableName");
-        hBaseDao.createTable(tableName, Lists.newArrayList("active", "passive"));
+        hBaseDao.createTable(tableName, Lists.newArrayList(NameConstant.ACTIVE, NameConstant.PASSIVE));
         byte[] ACTIVE = Bytes.toBytes(NameConstant.ACTIVE);
         byte[] FLAG = Bytes.toBytes(StateConstant.ACTIVE);
         while (true) {

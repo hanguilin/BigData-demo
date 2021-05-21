@@ -29,23 +29,6 @@ public class HBaseDao {
         conf = HBaseConfiguration.create();
     }
 
-    public static void main(String[] args) {
-        HBaseDao hBaseDao = new HBaseDao();
-//        List<String> tables = hBaseDao.listTable();
-//        tables.forEach(System.out::println);
-//		// 创建一个列族为name、age、address的名为test_user的表
-        hBaseDao.createTable("test_user", Lists.newArrayList("active", "passive"));
-        String rowKey = "15870580719_20210512142802_18323797211_1_0600";
-        Put put = new Put(rowKey.getBytes());
-        put.addColumn("active".getBytes(), "call1".getBytes(), "15870580719".getBytes());
-        put.addColumn("active".getBytes(), "call2".getBytes(), "18323797211".getBytes());
-        put.addColumn("active".getBytes(), "date_time".getBytes(), "20210512142802".getBytes());
-        put.addColumn("active".getBytes(), "duration".getBytes(), "0600".getBytes());
-        put.addColumn("active".getBytes(), "flag".getBytes(), "1".getBytes());
-        hBaseDao.insertRow("test_user", put);
-
-    }
-
     /**
      * 表是否存在
      *
@@ -85,7 +68,9 @@ public class HBaseDao {
             TableDescriptorBuilder tableDescriptorBuilder = TableDescriptorBuilder.newBuilder(table);
             // 添加协处理器
             CoprocessorDescriptor coprocessor = CoprocessorDescriptorBuilder
+                    // 协处理器类
                     .newBuilder("cn.javayuli.coprocessor.observer.CalleeWriteObserver")
+                    // 协处理器jar包的位置
                     .setJarPath("hdfs://linuxserver:9000/user/hadoop/hbase/coprocessor/tcs-consumer-coprocessor-1.0.jar")
                     .setPriority(Coprocessor.PRIORITY_USER)
                     .build();
