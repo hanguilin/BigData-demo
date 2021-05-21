@@ -1,0 +1,160 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电信客服</title>
+    <!-- vue引入组件库 -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- axios引入组件库 -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- elementui引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- elementui引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- echarts引入组件库 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.1.0/echarts.js"></script>
+    <style>
+        #my-echarts {
+            margin-top: 10vh;
+        }
+        .el-select {
+            width: 90%
+        }
+        #echarts,
+        #echarts2 {
+            margin: 20px 0;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="my-echarts">
+        <el-row>
+            <el-col :span="8" :offset=8>
+                <el-form ref="form" :model="form">
+                    <el-row>
+                        <el-col :span="10">
+                            <el-select v-model="form.type" placeholder="请选择时间维度">
+                                <el-option v-for="item in optionsType" :key="item.value" :label="item.label"
+                                    :value="item.value"></el-option>
+                            </el-select>
+                        </el-col>
+                        <el-col :span="10">
+                            <el-select v-model="form.phone" filterable placeholder="请选择查询用户">
+                                <el-option v-for="item in optionsContacts" :key="item.value" :label="item.label"
+                                    :value="item.value"></el-option>
+                            </el-select>
+                        </el-col>
+                        <el-col :span="4">
+                            <el-button type="primary" icon="el-icon-search" @click="request">搜索</el-button>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span=24>
+                            <div id="echarts"></div>
+                            <div id="echarts2"></div>
+                        </el-col>
+                    </el-row>
+                </el-form>
+            </el-col>
+        </el-row>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#my-echarts',
+            data() {
+                return {
+                    form: {
+                        type: 'month',
+                        phone: '18944239644'
+                    },
+                    optionsContacts: [],
+                    optionsType: [{
+                        label: '年',
+                        value: 'year'
+                    }, {
+                        label: '月',
+                        value: 'month'
+                    }, {
+                        label: '日',
+                        value: 'day'
+                    }]
+                }
+            },
+            mounted() {
+                this.request()
+                this.requestContacts()
+            },
+            methods: {
+                initEcharts(id, xData, data, title, name) {
+                    var chartDom = document.getElementById(id);
+                    var myChart = echarts.init(chartDom);
+                    var option;
+
+                    option = {
+                        title: {
+                            text: title,
+                            left: "left",
+                            textStyle: {
+                                fontSize: 20
+                            }
+                        },
+                        dataZoom: [
+                            {
+                                id: 'dataZoomX',
+                                type: 'slider',
+                                xAxisIndex: [0],
+                                filterMode: 'filter'
+                            }
+                        ],
+                        xAxis: {
+                            type: 'category',
+                            data: xData
+                        },
+                        yAxis: {
+                            name: name,
+                            type: 'value'
+                        },
+                        tooltip: {
+                            show: true,
+                            trigger: 'axis'
+                        },
+                        series: [{
+                            data: data,
+                            type: 'line',
+                            smooth: true,
+                            name: name
+                        }]
+                    };
+
+                    option && myChart.setOption(option);
+                },
+                request() {
+                    axios.get(`http://localhost:8000/web/data/${this.form.type}/${this.form.phone}`).then(({ data }) => {
+                        let dateArr = data.data.map(o => o.date)
+                        let callSumArr = data.data.map(o => o.callSum)
+                        let callSumDurationArr = data.data.map(o => o.callDurationSum)
+                        this.initEcharts('echarts', dateArr, callSumArr, '通话次数统计', '次数')
+                        this.initEcharts('echarts2', dateArr, callSumDurationArr, '通话时长统计', '秒数')
+                    })
+                },
+                requestContacts() {
+                    axios.get(`http://localhost:8000/web/data/contacts`).then(({ data }) => {
+                        this.optionsContacts = data.map(e => {
+                            return {
+                                label: e.telephone + ' ' + e.name,
+                                value: e.telephone
+                            }
+                        })
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
