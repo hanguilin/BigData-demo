@@ -16,13 +16,25 @@ import java.util.stream.Collectors;
 @TableName("tb_dimension_date")
 public class DimensionDate {
 
+    /**
+     * 自增id
+     */
     @TableId(type = IdType.AUTO)
     private Integer id;
 
+    /**
+     * 年
+     */
     private String year;
 
+    /**
+     * 月
+     */
     private String month;
 
+    /**
+     * 日
+     */
     private String day;
 
     public Integer getId() {

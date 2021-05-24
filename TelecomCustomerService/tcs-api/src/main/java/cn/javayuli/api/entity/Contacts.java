@@ -12,11 +12,20 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @TableName("tb_contacts")
 public class Contacts {
 
+    /**
+     * 自增id
+     */
     @TableId(type = IdType.AUTO)
     private Integer id;
 
+    /**
+     * 号码
+     */
     private String telephone;
 
+    /**
+     * 用户名
+     */
     private String name;
 
     public Integer getId() {

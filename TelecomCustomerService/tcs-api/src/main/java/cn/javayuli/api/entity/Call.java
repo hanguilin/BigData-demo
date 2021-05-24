@@ -11,15 +11,30 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @TableName("tb_call")
 public class Call {
 
+    /**
+     * 复合主键（联系人维度id，时间维度id）
+     */
     @TableId
     private String idDateContact;
 
+    /**
+     * 时间维度id
+     */
     private Integer idDateDimension;
 
+    /**
+     * 查询人的id
+     */
     private Integer idContact;
 
+    /**
+     * 通话次数总和
+     */
     private Integer callSum;
 
+    /**
+     * 通话时长总和
+     */
     private Integer callDurationSum;
 
     public String getIdDateContact() {

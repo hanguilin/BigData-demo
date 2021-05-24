@@ -53,6 +53,7 @@ public class EchartsController {
             return null;
         }
         List<DimensionDate> dimensionDates;
+        // 根据type去查询dimensionDate表中的数据
         switch (type) {
             case "year":
                 dimensionDates = dimensionDateService.list(Wrappers.lambdaQuery(DimensionDate.class).eq(DimensionDate::getMonth, "").eq(DimensionDate::getDay, ""));
@@ -66,9 +67,12 @@ public class EchartsController {
             default:
                 throw new RuntimeException("no type to query");
         }
+        // 将DimensionDate数据转为key为DimensionDate记录的id,value为DimensionDate的map
         Map<Integer, DimensionDate> dimensionDateMap = dimensionDates.stream().collect(Collectors.toMap(DimensionDate::getId, Function.identity()));
         Integer contactsId = contacts.getId();
+        // 将DimensionDate的id拼接contactsId
         List<String> callIdList = dimensionDateMap.keySet().stream().map(o -> o + "_" + contactsId).collect(Collectors.toList());
+        // 查找call数据
         List<Call> callList = callService.list(Wrappers.lambdaQuery(Call.class).in(Call::getIdDateContact, callIdList));
         List<DataOut> dataOuts = callList.stream().map(o -> {
             DimensionDate dimensionDate = dimensionDateMap.get(o.getIdDateDimension());
